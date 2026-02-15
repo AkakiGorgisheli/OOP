@@ -1,0 +1,101 @@
+// =======================
+// STUDENT MANAGEMENT SYSTEM
+// FULL PROJECT - ONE FILE
+// =======================
+
+
+// ---------- DATA CLASS ----------
+data class Student(
+    val id: Int,
+    var name: String,
+    var age: Int,
+    var grade: Double
+)
+
+
+// ---------- MANAGER CLASS ----------
+class StudentManager {
+
+    private val students = mutableListOf<Student>()
+
+    // Add student
+    fun addStudent(student: Student) {
+        students.add(student)
+        println("✅ Student added: ${student.name}")
+    }
+
+    // Show all students
+    fun showAllStudents() {
+        if (students.isEmpty()) {
+            println("❌ No students found.")
+            return
+        }
+
+        println("\n===== STUDENT LIST =====")
+        students.forEach {
+            println("ID: ${it.id} | Name: ${it.name} | Age: ${it.age} | Grade: ${it.grade}")
+        }
+        println("========================\n")
+    }
+
+    // Find student by ID
+    fun findStudentById(id: Int) {
+        val student = students.find { it.id == id }
+
+        if (student != null) {
+            println("🔎 Student found: $student")
+        } else {
+            println("❌ Student not found.")
+        }
+    }
+
+    // Remove student
+    fun removeStudent(id: Int) {
+        val removed = students.removeIf { it.id == id }
+
+        if (removed) {
+            println("🗑 Student removed.")
+        } else {
+            println("❌ Student not found.")
+        }
+    }
+
+    // Update grade
+    fun updateGrade(id: Int, newGrade: Double) {
+        val student = students.find { it.id == id }
+
+        if (student != null) {
+            student.grade = newGrade
+            println("✏ Grade updated for ${student.name}")
+        } else {
+            println("❌ Student not found.")
+        }
+    }
+}
+
+
+// ---------- MAIN FUNCTION ----------
+fun main() {
+
+    val manager = StudentManager()
+
+    // Add students
+    manager.addStudent(Student(1, "Ana", 20, 89.5))
+    manager.addStudent(Student(2, "Nika", 21, 92.0))
+    manager.addStudent(Student(3, "Luka", 19, 76.4))
+
+    // Show all
+    manager.showAllStudents()
+
+    // Find student
+    manager.findStudentById(2)
+
+    // Update grade
+    manager.updateGrade(3, 85.0)
+
+    // Remove student
+    manager.removeStudent(1)
+
+    // Show updated list
+    manager.showAllStudents()
+}
